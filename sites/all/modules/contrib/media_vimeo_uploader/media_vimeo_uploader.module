@@ -1,0 +1,53 @@
+<?php
+/**
+ * @file
+ * Media Vimeo Uploader.
+ */
+
+module_load_include('inc', 'media_vimeo_uploader', 'media_vimeo_uploader.vimeo');
+
+/**
+ * Implements hook_libraries_info().
+ */
+function media_vimeo_uploader_libraries_info() {
+  $libraries['vimeo.php'] = array(
+    'title' => 'vimeo',
+    'vendor url' => 'https://github.com/vimeo/vimeo.php',
+    'download url' => 'https://github.com/vimeo/vimeo.php/archive/master.zip',
+    'version' => 'master',
+    'files' => array(
+      'php' => array(
+        'autoload.php',
+      ),
+    ),
+  );
+  return $libraries;
+}
+
+/**
+ * Implements hook_media_browser_plugin_info().
+ */
+function media_vimeo_uploader_media_browser_plugin_info() {
+  $info['vimeo_uploader'] = array(
+    'title' => t('Vimeo'),
+    'class' => 'MediaVimeoUploaderBrowser',
+  );
+
+  return $info;
+}
+
+/**
+ * Implements hook_menu().
+ */
+function media_vimeo_uploader_menu() {
+  $items['admin/config/services/vimeouploader'] = array(
+    'title' => 'Vimeo Video Uploader',
+    'description' => 'Vimeo API accounts and settings.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('media_vimeo_uploader_api_settings_form'),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'media_vimeo_uploader.admin.inc',
+  );
+
+  return $items;
+}

@@ -1,0 +1,158 @@
+# To install the Drupal modules in this makefile run it from the docroot:
+# drush make --no-core sites/all/drush/contrib.make.yml
+# or
+# drush make --no-core sites/all/drush/contrib.make.yml --projects=examples
+
+# This setting will add all the Drupal modules to the
+# sites/all/modules/contrib directory
+
+defaults:
+  projects:
+    subdir: contrib
+
+# Core version
+# ------------
+# Each makefile should begin by declaring the core version of Drupal that all
+# projects should be compatible with.
+
+core: '7.x'
+
+# API version
+# ------------
+# Every makefile needs to declare it's Drush Make API version. This version of
+# drush make uses API version `2`.
+
+api: '2'
+
+# Projects
+# --------
+# Specify versions when necessary.
+
+projects:
+
+  admin_menu: '3'
+  admin_views: '1'
+  backup_migrate: '3'
+  better_formats: '1'
+  block_class: '2'
+  ckeditor: '1'
+  ckeditor_image2: '1'
+  ctools: '1'
+  devel: '1'
+  diff: '3'
+  ds: '2'
+  email: '1'
+  entity: '1'
+  environment_indicator: '2'
+  entityreference: '1'
+  features: '2'
+  feeds: '2'
+  field_permissions: '1'
+  file_entity:
+    version: '2'
+    patch:
+      # Notice: Undefined index: #options in file_entity_add_upload_submit()
+      # @see https://www.drupal.org/node/2690195
+      - "https://www.drupal.org/files/issues/file_entity-undefined_index-2690195-2.patch"
+  fitvids: '1' # 3MT
+  fivestar: '2' # 3MT
+  flag: '3' # 3MT
+  floating_block: '1'
+  globalredirect: '1'
+  google_analytics: '2'
+  honeypot: '1'
+  imagefield_focus: '1.x'
+  imce: '1'
+  imce_mkdir: '1'
+  job_scheduler: '2'
+  jquery_update: '2'
+  libraries: '2'
+  linkit: '3'
+  logintoboggan: '1'
+  maillog: '1'
+  masquerade: '1'
+  media: '2'
+  media_vimeo: '2' # 3MT
+  media_vimeo_uploader: '1' # 3MT
+  module_filter: '2'
+  pathauto: '1'
+  pathologic: '3'
+  redirect: '1'
+  reroute_email: '1'
+  rules: '2'
+  stage_file_proxy: '1'
+  token: '1'
+  user_restrictions: '1'
+  views: '3'
+  views_aggregator: '1' # 3MT, allows sorting on math expression fields
+  views_bulk_operations: '3'
+  views_data_export: '3'
+  views_fieldsets: '2'
+  views_role_based_global_text: '1'
+  views_rules: '1'
+  votingapi: '2' # 3MT
+
+# Themes
+# ------
+
+  zurb_foundation:
+    version: '5'
+    subdir: '' # no subdirectories for themes
+
+# Libraries
+# ---------
+
+libraries:
+
+  # required by ckeditor
+  ckeditor:
+    download:
+      type: file
+      url: "http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.5.6/ckeditor_4.5.6_standard.zip"
+    directory_name: "ckeditor"
+
+  # required by ckeditor_image2
+  dialogui:
+    download:
+      type: get
+      url: "http://download.ckeditor.com/dialogui/releases/dialogui_4.5.6.zip"
+    subdir: "ckeditor/plugins"
+    directory_name: "dialogui"
+
+  # required by fitvids
+  fitvids:
+    download:
+      type: file
+      url: "https://raw.github.com/davatron5000/FitVids.js/master/jquery.fitvids.js"
+    directory_name: "fitvids"
+
+  # required by ckeditor_image2
+  image2:
+    download:
+      type: get
+      url: "http://download.ckeditor.com/image2/releases/image2_4.5.6.zip"
+    subdir: "ckeditor/plugins"
+    directory_name: "image2"
+
+  # required by ckeditor_image2
+  lineutils:
+    download:
+      type: get
+      url: "http://download.ckeditor.com/lineutils/releases/lineutils_4.5.6.zip"
+    subdir: "ckeditor/plugins"
+    directory_name: "lineutils"
+
+  # required by media_vimeo_uploader
+  vimeo:
+    download:
+      type: file
+      url: "https://github.com/vimeo/vimeo.php/archive/1.2.3.zip"
+    directory_name: "vimeo.php"
+
+  # required by ckeditor_image2
+  widget:
+    download:
+      type: get
+      url: "http://download.ckeditor.com/widget/releases/widget_4.5.6.zip"
+    subdir: "ckeditor/plugins"
+    directory_name: "widget"
