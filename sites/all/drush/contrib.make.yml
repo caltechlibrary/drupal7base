@@ -61,7 +61,6 @@ projects:
   globalredirect: '1'
   google_analytics: '2'
   honeypot: '1'
-  imagefield_focus: '1.x'
   imce: '1'
   imce_mkdir: '1'
   job_scheduler: '2'
