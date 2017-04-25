@@ -58,6 +58,7 @@ projects:
   fivestar: '2' # 3MT
   flag: '3' # 3MT
   floating_block: '1'
+  focal_point: '1'
   globalredirect: '1'
   google_analytics: '2'
   honeypot: '1'
