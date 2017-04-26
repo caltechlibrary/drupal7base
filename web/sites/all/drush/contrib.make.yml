@@ -42,6 +42,7 @@ projects:
   diff: '3'
   ds: '2'
   email: '1'
+  email_registration: '1'
   entity: '1'
   environment_indicator: '2'
   entityreference: '1'
