@@ -81,6 +81,7 @@ projects:
   redirect: '1'
   reroute_email: '1'
   rules: '2'
+  shib_auth: '4' # Collections
   stage_file_proxy: '1'
   token: '1'
   user_restrictions: '1'
