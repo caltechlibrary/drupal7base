@@ -9,9 +9,9 @@
 script_root=$(dirname "$0")
 cd "$script_root" || exit
 project_root=$(pwd)
-cd "$project_root" || exit
+web_root="${project_root}/web"
 settings_file=$(find "$project_root" -type f | grep -E "\/settings\.php$")
-site_root=$(dirname "$settings_file")
+site_specific_dir=$(dirname "$settings_file")
 
 # Find all `.git` directories and pull new code for those repositories.
 find "$project_root" -type d | grep -E "\.git$" | while read -r repo; do
@@ -22,16 +22,14 @@ find "$project_root" -type d | grep -E "\.git$" | while read -r repo; do
 done
 
 # Check for `htaccess.patch` file.
-if find "$site_root" -type f | grep -E "\/htaccess\.patch$"
+if find "$site_specific_dir" -type f | grep -E "\/htaccess\.patch$"
   then
-    # Check if `.htaccess` customizations are present.
-    if ! grep -Fxq "# BEGIN CUSTOMIZATIONS" "$project_root"/web/.htaccess
-      then
-        # Apply patch to `.htaccess` file to add customizations.
-        git apply -v "$site_root"/patches/htaccess.patch
-    fi
+    # Revert `.htaccess` in order to apply patch.
+    git checkout "$web_root"/.htaccess
+    # Apply patch to `.htaccess` file to add customizations.
+    git apply -v "$site_specific_dir"/patches/htaccess.patch
 fi
 
 # Update the Drupal database.
-cd "$site_root" || exit
+cd "$site_specific_dir" || exit
 drush updb -y
