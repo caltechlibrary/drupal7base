@@ -134,14 +134,16 @@ function shib_auth_terminate_session($msg = '') {
 
   $_SESSION = array();
 
-  if ($msg) {
-    shib_auth_error($msg);
-  }
-
   // Added error suppression to session destroy to suppress
   //  warning: session_destroy() [function.session-destroy]: Trying to destroy uninitialized session ...
   @session_destroy();
   $user = drupal_anonymous_user();
+  // call drupal_set_message after session_destroy to persist the message
+  if ($msg) {
+    shib_auth_error($msg);
+  }
+  // break the request processing to avoid cached content to be served
+  drupal_goto();
 } //function shib_auth_terminate_session
 
 /**

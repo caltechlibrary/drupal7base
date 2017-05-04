@@ -4,9 +4,9 @@ package = Shibboleth
 core = 7.x
 dependencies[] = shib_auth
 
-; Information added by Drupal.org packaging script on 2015-06-25
-version = "7.x-4.3"
+; Information added by Drupal.org packaging script on 2017-04-18
+version = "7.x-4.4"
 core = "7.x"
 project = "shib_auth"
-datestamp = "1435233895"
+datestamp = "1492550051"
 
