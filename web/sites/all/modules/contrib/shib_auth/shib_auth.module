@@ -912,34 +912,36 @@ function shib_auth_permission() {
 } // function shib_auth_permission()
 
 /**
- * Generates shibboleth login url based on configuration
+ * Generates shibboleth login url based on configuration.
  */
 function shib_auth_generate_login_url() {
-  $queries = $_GET;
   $sep = "?";
   $sessioninitiator = shib_auth_get_redirect_base(shib_auth_config('full_handler_url'));
   $forceauthn = '';
 
-  //append forceAuthN variable to the login string
+  // Append forceAuthN variable to the login string.
   if (shib_auth_config('forceauthn')) {
     $forceauthn = '&forceAuthn=1';
   }
 
-  $queries['q'] = 'shib_login/' . $queries['q'];
+  $queries = isset($_GET['q'])
+    ? 'shib_login/' . $_GET['q']
+    : 'shib_login/user';
 
-  //generate the currently viewed url to pass as an url to return from IdP
-  $url_to_return = (isset($_SERVER['HTTPS'])||
-                   (shib_auth_config('force_https') && drupal_substr($sessioninitiator, 0, 5) == 'https') ?
-                   'https' : 'http')
-                           . '://' . $_SERVER['HTTP_HOST']
-                           . url('', array('query' => $queries));
+  // Generate the currently viewed url to pass as an url to return from IdP.
+  $url_to_return =
+    (isset($_SERVER['HTTPS'])||
+    (shib_auth_config('force_https') && drupal_substr($sessioninitiator, 0, 5) == 'https') ?
+    'https' : 'http')
+            . '://' . $_SERVER['HTTP_HOST']
+            . url($queries);
 
   if (preg_match('/\?/', $sessioninitiator)) {
-    $sep='&';
+    $sep = '&';
   }
 
   return check_url($sessioninitiator . $sep . "target=" . urlencode($url_to_return) . $forceauthn);
-} //function shib_auth_generate_login_url()
+}
 
 /**
  * Implements hook_menu().

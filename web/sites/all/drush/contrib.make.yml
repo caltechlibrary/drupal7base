@@ -81,7 +81,12 @@ projects:
   redirect: '1'
   reroute_email: '1'
   rules: '2'
-  shib_auth: '4' # Collections
+  shib_auth: # Collections
+    version: '4'
+    patch:
+      # shib_auth_generate_login_url returns unnecessary 'q' parameter for target URL
+      # @see https://www.drupal.org/node/2761329
+      - "https://www.drupal.org/files/issues/shib_auth-generate_login_url-2761329.patch"
   stage_file_proxy: '1'
   token: '1'
   user_restrictions: '1'
