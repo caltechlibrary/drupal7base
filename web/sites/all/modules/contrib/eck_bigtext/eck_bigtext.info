@@ -1,0 +1,10 @@
+name = ECK Big Text
+description = Adds a text property for storing more than 255 characters in ECK.
+core = 7.x
+package = ECK
+dependencies[] = eck
+
+; Information added by drush on 2017-07-17
+version = "7.x-1.x-dev"
+project = "eck_bigtext"
+datestamp = "1500324951"

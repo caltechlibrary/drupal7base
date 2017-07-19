@@ -42,6 +42,12 @@ projects:
   diff: '3'
   ds: '2'
   eck: '2'
+  eck_bigtext:
+    type: module
+    download:
+      type: git
+      branch: '7.x-1.x'
+      url: "https://git.drupal.org/sandbox/TommyK/2895469.git"
   email: '1'
   email_registration: '1'
   entity: '1'

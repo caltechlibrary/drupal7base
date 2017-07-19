@@ -1,0 +1,28 @@
+<?php
+/**
+ * @file
+ * eck_bigtext module file.
+ *
+ * @todo Create behaviors for the bigtext property type if a form is needed.
+ */
+
+/**
+ * Implements hook_eck_property_types().
+ */
+function eck_bigtext_eck_property_types() {
+  return array("bigtext" => t("Long text"));
+}
+
+/**
+ * Implements hook_eck_property_type_schema_alter().
+ */
+function eck_bigtext_eck_property_type_schema_alter(&$schema, $type) {
+  if ($type == 'bigtext') {
+    $schema = array(
+      'description' => 'Long text',
+      'type' => 'text',
+      'size' => 'big',
+      'not null' => FALSE,
+    );
+  }
+}
