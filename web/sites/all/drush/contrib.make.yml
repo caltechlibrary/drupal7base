@@ -54,6 +54,7 @@ projects:
   environment_indicator: '2'
   entityreference: '1'
   features: '2'
+  feed_import: '3'
   feeds: '2'
   field_permissions: '1'
   file_entity:
