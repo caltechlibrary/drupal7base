@@ -41,6 +41,7 @@ projects:
   devel: '1'
   diff: '3'
   ds: '2'
+  eck: '2'
   email: '1'
   email_registration: '1'
   entity: '1'
