@@ -96,6 +96,7 @@ projects:
       # @see https://www.drupal.org/node/2761329
       - "https://www.drupal.org/files/issues/shib_auth-generate_login_url-2761329.patch"
   stage_file_proxy: '1'
+  strongarm: '2'
   token: '1'
   user_restrictions: '1'
   views: '3'
