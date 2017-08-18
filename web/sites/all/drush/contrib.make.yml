@@ -104,6 +104,7 @@ projects:
   views_bulk_operations: '3'
   views_data_export: '3'
   views_fieldsets: '2'
+  views_natural_sort: '2'
   views_role_based_global_text: '1'
   views_rules: '1'
   votingapi: '2' # 3MT
