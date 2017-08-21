@@ -10,7 +10,7 @@ script_root=$(dirname "$0")
 cd "$script_root" || exit
 project_root=$(pwd)
 web_root="${project_root}/web"
-settings_file=$(find "$project_root" -type f | grep -E "\/settings\.php$")
+settings_file=$(find "$web_root" -type f | grep -E "\/settings\.php$")
 site_specific_dir=$(dirname "$settings_file")
 
 # Find all `.git` directories and pull new code for those repositories.
