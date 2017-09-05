@@ -21,6 +21,9 @@ find "$project_root" -type d | grep -E "\.git$" | while read -r repo; do
   git pull
 done
 
+# @TODO Construct web directory with `drush make`.
+
+# @TODO Check for all patch files and apply them all.
 # Check for `htaccess.patch` file.
 if find "$site_specific_dir" -type f | grep -E "\/htaccess\.patch$"
   then
