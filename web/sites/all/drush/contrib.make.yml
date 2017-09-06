@@ -37,6 +37,7 @@ projects:
   block_class: '2'
   ckeditor: '1'
   ckeditor_image2: '1'
+  css_editor: '1'
   ctools: '1'
   devel: '1'
   diff: '3'
