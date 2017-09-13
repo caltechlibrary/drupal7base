@@ -83,6 +83,7 @@ projects:
   logintoboggan: '1'
   maillog: '1'
   masquerade: '1'
+  mathjax: '2'
   media: '2'
   media_vimeo: '2' # 3MT
   media_vimeo_uploader: '1' # 3MT
