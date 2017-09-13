@@ -65,6 +65,7 @@ projects:
       # Notice: Undefined index: #options in file_entity_add_upload_submit()
       # @see https://www.drupal.org/node/2690195
       - "https://www.drupal.org/files/issues/file_entity-undefined_index-2690195-2.patch"
+  filter_perms: '1'
   fitvids: '1' # 3MT
   fivestar: '2' # 3MT
   flag: '3' # 3MT
