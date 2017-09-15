@@ -103,7 +103,12 @@ projects:
   stringoverrides: '1'
   strongarm: '2'
   token: '1'
-  user_restrictions: '1'
+  user_restrictions:
+    version: '1'
+    patch:
+      # PHP Fatal error: Only variables can be passed by reference in user_restrictions/user_restrictions.classes.inc on line 228
+      # @see https://www.drupal.org/node/2856139
+      - "https://www.drupal.org/files/issues/variable_passed_by_reference-2856139-1.patch"
   views: '3'
   views_aggregator: '1' # 3MT, allows sorting on math expression fields
   views_bulk_operations: '3'
