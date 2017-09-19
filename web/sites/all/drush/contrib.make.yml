@@ -90,6 +90,7 @@ projects:
   module_filter: '2'
   pathauto: '1'
   pathologic: '3'
+  realname: '1'
   redirect: '1'
   reroute_email: '1'
   rules: '2'
