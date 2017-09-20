@@ -94,6 +94,8 @@ projects:
   redirect: '1'
   reroute_email: '1'
   rules: '2'
+  search_api: '1'
+  search_api_db: '1'
   shib_auth: # Collections
     version: '4'
     patch:
