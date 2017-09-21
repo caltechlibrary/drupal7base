@@ -88,6 +88,7 @@ projects:
   media: '2'
   media_vimeo: '2' # 3MT
   media_vimeo_uploader: '1' # 3MT
+  menu_position: '1'
   module_filter: '2'
   pathauto: '1'
   pathologic: '3'
