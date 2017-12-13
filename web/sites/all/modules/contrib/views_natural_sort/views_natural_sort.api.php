@@ -6,17 +6,15 @@
  */
 
 /**
- * Information used by the index rebuilding engine.
- *
- * This information is passed to each module during re-index so that modules can
- * determine whether it needs to return items or not.
+ * Information that tells VNS about entities and properties to index.
  *
  * @return array
- *   Array of arrays defining fields and entities to reindex
+ *   Array of arrays defining fields and entities to index
  *     array(
  *       array(
  *         'entity_type' - string Ex. node
- *         'field ' - string Field name to indicate during re-index
+ *         'field ' - string Field name. Lines up with property or field.
+ *         'module' - string naming the module that manages indexing.
  *       ),
  *     )
  */
@@ -25,28 +23,59 @@ function hook_views_natural_sort_get_entry_types() {
     array(
       'entity_type' => 'user',
       'field' => 'book_favorites',
+      'module' => 'book_favorites_module',
     ),
   );
 }
 
 /**
+ * Used to alter entry types added by other modules.
+ *
+ * @param array $entry_types
+ *   Array of arrays defining fields and entities to index
+ *     array(
+ *       array(
+ *         'entity_type' - string Ex. node
+ *         'field ' - string Field name. Lines up with property or field.
+ *         'module' - string naming the module that manages indexing.
+ *       ),
+ *     )
+ */
+function hook_views_natural_sort_get_entry_types_alter(array &$entry_types) {
+  foreach ($entry_types as $key => $entry_type) {
+    // We never naturally sort users, so lets nix em.
+    if ($entry_type == 'user') {
+      unset($entry_types[$key]);
+    }
+  }
+}
+
+/**
  * Used for a custom module to queue data that needs to be re-indexed.
  *
- * This is typicall used when the module is installed or settings are changed.
+ * This is typically used when the module is installed or settings are changed.
  *
  * @param array $entry_type
  *   Array representing an entry type with an entity_type field pair.
- *     $entity_type - The type of the entity we are getting
+ *     'entry_type' - The type of the entity we are getting
  *                    data that needs to be re-indexed from
- *     $field - The field that needs to be re-indexed.
+ *     'field' - The field that needs to be re-indexed.
+ *     'module' - string naming the module that manages indexing.
+ * @param int $offset
+ *   Integer representing the start of the subset we want to grab.
+ * @param int $limit
+ *   Integer representing the number of items in the subset we want to grab.
  */
-function hook_views_natural_sort_queue_rebuild_data(array $entry_type) {
+function hook_views_natural_sort_queue_rebuild_data(array $entry_type, $offset = 0, $limit = NULL) {
   if ($entry_type['entity_type'] != 'user' || $entry_type['field'] != 'book_favorites') {
     return array();
   }
-  $result = db_select('user', 'u')
+  $query = db_select('user', 'u')
     ->fields('u', array('uid', 'book_favorites'))
-    ->execute();
+  if ($limit) {
+    $query->range($offset, $limit);
+  }
+  $result = $query->execute();
   $queue = views_natural_sort_get_queue();
   foreach ($result as $row) {
     // Grab the data returned and queue it up for transformation.
@@ -61,6 +90,30 @@ function hook_views_natural_sort_queue_rebuild_data(array $entry_type) {
 }
 
 /**
+ * Used for a custom module to return a count for the data being re-indexed.
+ *
+ * @param array $entry_type
+ *   Array representing an entry type with an entity_type field pair.
+ *     'entry_type' - The type of the entity we are getting
+ *                    data that needs to be re-indexed from
+ *     'field' - The field that needs to be re-indexed.
+ *     'module' - string naming the module that manages indexing.
+ *
+ * @return int
+ *   Integer representing the total number of items we are re-indexing.
+ */
+function hook_views_natural_sort_queue_rebuild_data_count(array $entry_type) {
+  if ($entry_type['entity_type'] != 'user' || $entry_type['field'] != 'book_favorites') {
+    return 0;
+  }
+  $result = db_select('user', 'u')
+    ->fields('u', array('uid', 'book_favorites'))
+    ->execute()
+    ->rowCount();
+  return $result;
+}
+
+/**
  * Used to define custom transformations or reorder transformations.
  *
  * @param array &$transformations
@@ -68,11 +121,11 @@ function hook_views_natural_sort_queue_rebuild_data(array $entry_type) {
  * @param array $index_entry
  *   A representation of the original entry that is would have been put in the
  *   database before the transformation
- *     $eid - Entity Id of the item referenced
- *     $entity_type - The Entity Type. Ex. node
- *     $field - reference to the property or field name
- *     $delta - the item number in that field or property
- *     $content - The original string before
+ *     'eid' - Entity Id of the item referenced
+ *     'entity_type' - The Entity Type. Ex. node
+ *     'field' - reference to the property or field name
+ *     'delta' - the item number in that field or property
+ *     'content' - The original string before
  *                transformations.
  */
 function hook_views_natural_sort_transformations_alter(array &$transformations, array $index_entry) {
@@ -103,14 +156,4 @@ function hook_views_natural_sort_transformations_alter(array &$transformations, 
  */
 function _my_special_transformation_function($string) {
   return str_replace('a', '', $string);
-}
-
-/**
- * This hook has been deprecated and is no longer called.
- *
- * @deprecated
- *
- * @see hook_views_natural_sort_queue_rebuild_data
- */
-function hook_views_natural_sort_queue_rebuild_data($entry_type) {
 }
