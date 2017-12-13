@@ -58,7 +58,7 @@ projects:
   features: '2'
   feed_import: '3'
   feeds: '2'
-  feeds_tamper: '1.x'
+  feeds_tamper: '1'
   field_permissions: '1'
   file_entity:
     version: '2'
