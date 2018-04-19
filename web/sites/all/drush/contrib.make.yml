@@ -32,6 +32,7 @@ projects:
 
   admin_menu: '3'
   admin_views: '1'
+  audiofield: '1' # 3MT
   backup_migrate: '3'
   better_formats: '1'
   block_class: '2'
